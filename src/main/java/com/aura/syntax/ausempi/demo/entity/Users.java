@@ -1,9 +1,7 @@
 package com.aura.syntax.ausempi.demo.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.aura.syntax.ausempi.demo.enums.UserType;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -33,6 +31,8 @@ public class Users implements UserDetails {
     private LocalDateTime createdAt;
     private Boolean isExamCompleted;
     private Boolean isActive;
+    @Enumerated(EnumType.STRING)
+    private UserType userType;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

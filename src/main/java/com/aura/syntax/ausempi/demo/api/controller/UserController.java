@@ -23,7 +23,7 @@ public class UserController {
     }
 
     @GetMapping
-    public PaginatedResponseDto getAllUsers(@RequestParam(value = "page", required = false) int page,
+    public PaginatedResponseDto<UserDto> getAllUsers(@RequestParam(value = "page", required = false) int page,
                                             @RequestParam(value = "size", required = false) int size,
                                             @RequestParam(value = "search", required = false) String search) {
         return userService.getAllUsers(page, size, search);

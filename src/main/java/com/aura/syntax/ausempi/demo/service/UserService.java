@@ -34,7 +34,7 @@ public class UserService {
         return new ResponseDto("User created successfully");
     }
 
-    public PaginatedResponseDto getAllUsers(int page, int size, String search) {
+    public PaginatedResponseDto<UserDto> getAllUsers(int page, int size, String search) {
         Pageable pageable = PageRequest.of(page - 1, size);
         Page<UserDto> userDtos = userRepository.getAllUsers(pageable, search);
 

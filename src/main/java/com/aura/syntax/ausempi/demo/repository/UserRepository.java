@@ -23,7 +23,8 @@ public interface UserRepository extends JpaRepository<Users, Long> {
                     u.employeeId,
                     u.createdAt,
                     u.isExamCompleted,
-                    u.isActive
+                    u.isActive,
+                    u.userType
                 )
                 FROM Users u
                 WHERE (:search IS NULL OR 
@@ -32,6 +33,7 @@ public interface UserRepository extends JpaRepository<Users, Long> {
                        LOWER(u.email) LIKE LOWER(CONCAT('%', :search, '%')) OR
                        LOWER(u.employeeId) LIKE LOWER(CONCAT('%', :search, '%'))
                       )
+                      AND u.userType = 'DRIVER'
             """)
     Page<UserDto> getAllUsers(Pageable pageable, String search);
 

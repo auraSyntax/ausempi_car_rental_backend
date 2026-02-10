@@ -1,5 +1,6 @@
 package com.aura.syntax.ausempi.demo.api.dto;
 
+import com.aura.syntax.ausempi.demo.enums.UserType;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,9 +29,10 @@ public class UserDto {
     private Boolean isExamCompleted;
     private String employeeName;
     private Boolean isActive;
+    private String userType;
 
     public UserDto(Long id, String employeeName, String phoneNumber, String email, String employeeId, LocalDateTime createdAt, Boolean isExamCompleted,
-                   Boolean isActive) {
+                   Boolean isActive, UserType userType) {
         this.id = id;
         this.employeeName = employeeName;
         this.phoneNumber = phoneNumber;
@@ -39,5 +41,6 @@ public class UserDto {
         this.createdAt = createdAt;
         this.isExamCompleted = isExamCompleted;
         this.isActive = isActive;
+        this.userType = userType != null ? userType.getMappedValue() : null;
     }
 }

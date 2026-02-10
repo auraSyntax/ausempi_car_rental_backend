@@ -2,6 +2,7 @@ package com.aura.syntax.ausempi.demo.converter;
 
 import com.aura.syntax.ausempi.demo.api.dto.UserDto;
 import com.aura.syntax.ausempi.demo.entity.Users;
+import com.aura.syntax.ausempi.demo.enums.UserType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -26,6 +27,7 @@ public class UserConverter {
                 .isExamCompleted(Boolean.FALSE)
                 .password(passwordEncoder.encode(userDto.getPassword()))
                 .isActive(Boolean.TRUE)
+                .userType(UserType.DRIVER)
                 .build();
     }
 
@@ -39,6 +41,7 @@ public class UserConverter {
                 .employeeId(users.getEmployeeId())
                 .createdAt(users.getCreatedAt())
                 .isExamCompleted(users.getIsExamCompleted())
+                .userType(users.getUserType().getMappedValue())
                 .build();
     }
 
