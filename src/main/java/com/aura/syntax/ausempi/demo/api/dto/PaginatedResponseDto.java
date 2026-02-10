@@ -1,0 +1,16 @@
+package com.aura.syntax.ausempi.demo.api.dto;
+
+import lombok.Data;
+
+import java.util.List;
+
+@Data
+public class PaginatedResponseDto<T> {
+    private long totalItems;
+    private List<T> data;
+    private int totalPages;
+    private int currentPage;
+    private int pageSize;
+    private boolean hasNext;
+    private boolean hasPrevious;
+}
