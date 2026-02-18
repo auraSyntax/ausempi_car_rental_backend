@@ -23,13 +23,16 @@ public class VideoDto {
     private Integer durationSeconds;
     private LocalDateTime createdAt;
     private List<QuestionDto> questionDtos;
+    private Integer videoOrder;
 
-    public VideoDto(Long id, String title, String description, String videoUrl, Integer durationSeconds, LocalDateTime createdAt) {
+    public VideoDto(Long id, String title, String description, String videoUrl, Integer durationSeconds, LocalDateTime createdAt, Integer videoOrder) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.videoUrl = videoUrl;
         this.durationSeconds = durationSeconds;
         this.createdAt = createdAt;
+        this.videoOrder = videoOrder;
     }
+
 }

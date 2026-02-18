@@ -6,6 +6,9 @@ import com.aura.syntax.ausempi.demo.api.dto.VideoDto;
 import com.aura.syntax.ausempi.demo.service.VideoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.w3c.dom.stylesheets.LinkStyle;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/videos")
@@ -39,5 +42,10 @@ public class VideoController {
     @PatchMapping
     public ResponseDto updateVideoQuestionsOptions(@RequestBody VideoDto videoDto) {
         return videoService.updateVideoQuestionsOptions(videoDto);
+    }
+
+    @GetMapping("/all")
+    public List<VideoDto> getAllVideos(){
+        return videoService.getAllVideos();
     }
 }

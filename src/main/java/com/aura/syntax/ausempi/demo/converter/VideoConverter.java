@@ -30,6 +30,7 @@ public class VideoConverter {
                 .createdAt(LocalDateTime.now())
                 .durationSeconds(videoDto.getDurationSeconds())
                 .questions(convertQuestions(videoDto))
+                .videoOrder(videoDto.getVideoOrder())
                 .build();
     }
 
@@ -46,6 +47,9 @@ public class VideoConverter {
 
         if (dto.getDurationSeconds() != null)
             video.setDurationSeconds(dto.getDurationSeconds());
+
+        if (dto.getVideoOrder() != null)
+            video.setVideoOrder(dto.getVideoOrder());
 
         updateQuestions(video, dto.getQuestionDtos());
 
@@ -151,6 +155,7 @@ public class VideoConverter {
                 .createdAt(LocalDateTime.now())
                 .durationSeconds(videos.getDurationSeconds())
                 .questionDtos(convertQuestions(videos))
+                .videoOrder(videos.getVideoOrder())
                 .build();
     }
 

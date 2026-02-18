@@ -80,4 +80,8 @@ public class VideoService {
         videoRepository.save(videoConverter.convert(videoDto, videos));
         return new ResponseDto("Video updated successfully");
     }
+
+    public List<VideoDto> getAllVideos() {
+        return videoRepository.getAllVideos(videoUrl);
+    }
 }
