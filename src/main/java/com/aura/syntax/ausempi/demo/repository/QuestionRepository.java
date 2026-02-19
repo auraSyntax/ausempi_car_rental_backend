@@ -23,4 +23,6 @@ public interface QuestionRepository extends JpaRepository<Questions, Long> {
                 ORDER BY q.questionOrder ASC
             """)
     List<QuestionDto> getAllQuestionsByVideoId(Long videoId, String search);
+
+    List<Questions> findByVideoId(Long videoId);
 }

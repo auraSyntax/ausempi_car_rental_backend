@@ -26,5 +26,5 @@ public class Videos {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "videoId")
     private Set<Questions> questions;
-    private int videoOrder;
+    private Integer videoOrder;
 }

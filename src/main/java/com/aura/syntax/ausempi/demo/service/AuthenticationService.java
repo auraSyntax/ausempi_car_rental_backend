@@ -66,6 +66,8 @@ public class AuthenticationService {
         userDto.setEmployeeName(user.getFirstName() + " " + user.getLastName());
         userDto.setEmail(user.getEmail());
         userDto.setId(user.getId());
+        userDto.setUserType(user.getUserType().getMappedValue());
+        userDto.setIsExamCompleted(user.getIsExamCompleted());
 
         return AuthResponse.builder()
                 .accessToken(accessToken)

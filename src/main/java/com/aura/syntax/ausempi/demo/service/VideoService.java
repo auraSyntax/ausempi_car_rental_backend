@@ -2,6 +2,7 @@ package com.aura.syntax.ausempi.demo.service;
 
 import com.aura.syntax.ausempi.demo.api.dto.*;
 import com.aura.syntax.ausempi.demo.converter.VideoConverter;
+import com.aura.syntax.ausempi.demo.entity.Options;
 import com.aura.syntax.ausempi.demo.entity.Videos;
 import com.aura.syntax.ausempi.demo.exception.ServiceException;
 import com.aura.syntax.ausempi.demo.repository.OptionRepository;
@@ -83,5 +84,37 @@ public class VideoService {
 
     public List<VideoDto> getAllVideos() {
         return videoRepository.getAllVideos(videoUrl);
+    }
+
+    public ScoreDto submit(List<OptionSubmissionDto> submissions) {
+
+        ScoreDto scoreDto = new ScoreDto();
+
+        if (submissions == null || submissions.isEmpty()) {
+            scoreDto.setScore(0);
+            scoreDto.setPassed(false);
+            return scoreDto;
+        }
+
+        int totalQuestions = submissions.size();
+        int correctAnswers = 0;
+
+        for (OptionSubmissionDto submission : submissions) {
+
+            Options option = optionRepository
+                    .findById(submission.getSelectedOptionId())
+                    .orElse(null);
+
+            if (option != null && Boolean.TRUE.equals(option.getIsCorrect())) {
+                correctAnswers++;
+            }
+        }
+
+        int score = (correctAnswers * 100) / totalQuestions;
+
+        scoreDto.setScore(score);
+        scoreDto.setPassed(score >= 80);
+
+        return scoreDto;
     }
 }

@@ -24,4 +24,6 @@ public interface OptionRepository extends JpaRepository<Options, Long> {
                 ORDER BY o.id ASC
             """)
     List<OptionDto> getAllOptionsByQuestionId(Long questionId, String search);
+
+    List<Options> findByQuestionIdIn(List<Long> questionIds);
 }

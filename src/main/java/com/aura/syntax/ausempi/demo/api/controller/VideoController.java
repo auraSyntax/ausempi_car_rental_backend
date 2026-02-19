@@ -1,12 +1,9 @@
 package com.aura.syntax.ausempi.demo.api.controller;
 
-import com.aura.syntax.ausempi.demo.api.dto.PaginatedResponseDto;
-import com.aura.syntax.ausempi.demo.api.dto.ResponseDto;
-import com.aura.syntax.ausempi.demo.api.dto.VideoDto;
+import com.aura.syntax.ausempi.demo.api.dto.*;
 import com.aura.syntax.ausempi.demo.service.VideoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import org.w3c.dom.stylesheets.LinkStyle;
 
 import java.util.List;
 
@@ -45,7 +42,12 @@ public class VideoController {
     }
 
     @GetMapping("/all")
-    public List<VideoDto> getAllVideos(){
+    public List<VideoDto> getAllVideos() {
         return videoService.getAllVideos();
+    }
+
+    @PostMapping("/{id}/submit")
+    public ScoreDto submit(@RequestBody List<OptionSubmissionDto> submissions) {
+        return videoService.submit(submissions);
     }
 }
