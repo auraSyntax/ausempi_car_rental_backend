@@ -19,13 +19,9 @@ COPY src ./src
 RUN mvn -q clean package -DskipTests
 
 # Run Stage
-FROM openjdk:17-jdk-slim
+FROM eclipse-temurin:17-jdk-jammy
 WORKDIR /app
-
-# Copy jar (avoid hardcoding jar name changes by using wildcard)
 COPY --from=build /app/target/*.jar /app/app.jar
 
-# Railway will route traffic to $PORT (we default to 8000 in properties)
 EXPOSE 8000
-
 ENTRYPOINT ["java", "-jar", "/app/app.jar"]
