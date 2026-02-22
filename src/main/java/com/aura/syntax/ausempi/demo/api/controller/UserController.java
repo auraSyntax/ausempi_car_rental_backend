@@ -45,7 +45,8 @@ public class UserController {
     }
 
     @PutMapping
-    public ResponseDto updateExamStatus(@RequestParam(value = "userId") Long userId){
-        return userService.updateExamStatus(userId);
+    public ResponseDto updateExamStatus(@RequestParam(value = "userId") Long userId,
+                                        @RequestParam(value = "status") Boolean status){
+        return userService.updateExamStatus(userId,status);
     }
 }
