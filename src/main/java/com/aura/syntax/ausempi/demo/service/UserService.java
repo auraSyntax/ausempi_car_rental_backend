@@ -71,4 +71,12 @@ public class UserService {
         userRepository.deleteById(id);
         return new ResponseDto("User deleted successfully");
     }
+
+    public ResponseDto updateExamStatus(Long userId) {
+        Users users = userRepository.findById(userId).orElseThrow(() -> new ServiceException("User not found", "Bad request", HttpStatus.BAD_REQUEST));
+        users.setIsExamCompleted(Boolean.TRUE);
+        userRepository.save(users);
+
+        return new ResponseDto("User exam status updated");
+    }
 }

@@ -23,7 +23,7 @@ public class Videos {
     private String videoUrl;
     private Integer durationSeconds;
     private LocalDateTime createdAt;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @JoinColumn(name = "videoId")
     private Set<Questions> questions;
     private Integer videoOrder;

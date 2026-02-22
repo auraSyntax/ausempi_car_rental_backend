@@ -43,4 +43,9 @@ public class UserController {
     public ResponseDto deleteUser(@PathVariable("id") Long id){
         return userService.deleteUser(id);
     }
+
+    @PutMapping
+    public ResponseDto updateExamStatus(@RequestParam(value = "userId") Long userId){
+        return userService.updateExamStatus(userId);
+    }
 }

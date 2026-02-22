@@ -32,7 +32,9 @@ public class AuthenticationService {
 
             Users user = userRepository.findByEmail(request.getEmail())
                     .orElseThrow(() -> new ServiceException("User not found", "Bad request", HttpStatus.BAD_REQUEST));
-
+            if (!request.getUserType().equalsIgnoreCase(user.getUserType().getMappedValue())){
+                throw new ServiceException("This is email is registered as " + user.getUserType().getMappedValue(), "Unauthorized", HttpStatus.UNAUTHORIZED);
+            }
             return buildAuthResponse(user, authentication);
 
         } catch (BadCredentialsException e) {

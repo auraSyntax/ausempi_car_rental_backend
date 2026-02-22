@@ -58,16 +58,34 @@ public class VideoConverter {
 
     private void updateQuestions(Videos video, List<QuestionDto> dtos) {
 
+        if (dtos == null) {
+            video.getQuestions().clear(); // delete all if nothing sent
+            return;
+        }
+
         Map<Long, Questions> existingMap =
                 video.getQuestions()
                         .stream()
                         .collect(Collectors.toMap(Questions::getId, q -> q));
+
+        // Collect incoming IDs
+        Set<Long> incomingIds = dtos.stream()
+                .map(QuestionDto::getId)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toSet());
+
+        // DELETE questions not in request
+        video.getQuestions().removeIf(q ->
+                q.getId() != null && !incomingIds.contains(q.getId())
+        );
 
         for (QuestionDto dto : dtos) {
 
             Questions question;
 
             if (dto.getId() != null && existingMap.containsKey(dto.getId())) {
+
+                // UPDATE
                 question = existingMap.get(dto.getId());
 
                 if (dto.getQuestionText() != null)
@@ -77,6 +95,8 @@ public class VideoConverter {
                     question.setQuestionOrder(dto.getQuestionOrder());
 
             } else {
+
+                // CREATE
                 question = new Questions();
                 video.getQuestions().add(question);
 
@@ -90,16 +110,36 @@ public class VideoConverter {
 
     private void updateOptions(Questions question, List<OptionDto> dtos) {
 
+        if (dtos == null) {
+            question.getOptions().clear(); // delete all if nothing sent
+            return;
+        }
+
         Map<Long, Options> existingMap =
-                question.getOptions()
+                Optional.ofNullable(question.getOptions())
+                        .orElse(Collections.emptySet())
                         .stream()
                         .collect(Collectors.toMap(Options::getId, o -> o));
+
+        Set<Long> incomingIds = dtos.stream()
+                .map(OptionDto::getId)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toSet());
+
+        // DELETE options not in request
+        if (question.getOptions() != null) {
+            question.getOptions().removeIf(o ->
+                    o.getId() != null && !incomingIds.contains(o.getId())
+            );
+        }
 
         for (OptionDto dto : dtos) {
 
             Options option;
 
             if (dto.getId() != null && existingMap.containsKey(dto.getId())) {
+
+                // UPDATE
                 option = existingMap.get(dto.getId());
 
                 if (dto.getOptionText() != null)
@@ -107,8 +147,15 @@ public class VideoConverter {
 
                 if (dto.getIsCorrect() != null)
                     option.setIsCorrect(dto.getIsCorrect());
+
             } else {
+
+                // CREATE
                 option = new Options();
+                if (question.getOptions() == null) {
+                    question.setOptions(new HashSet<>());
+                }
+
                 question.getOptions().add(option);
 
                 option.setOptionText(dto.getOptionText());
@@ -179,7 +226,7 @@ public class VideoConverter {
             OptionDto optionDto = new OptionDto();
             optionDto.setId(options.getId());
             optionDto.setOptionText(options.getOptionText());
-            optionDto.setIsCorrect(options.getIsCorrect());
+//            optionDto.setIsCorrect(options.getIsCorrect());
             optionDtos.add(optionDto);
         });
 
