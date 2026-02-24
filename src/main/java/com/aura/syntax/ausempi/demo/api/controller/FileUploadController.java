@@ -15,7 +15,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/v1/file-upload")
 @RequiredArgsConstructor
-@CrossOrigin(origins = {"http://localhost:5173","https://ausempi-web.vercel.app"})
+@CrossOrigin(origins = {"http://localhost:5173","https://ausempi-web.vercel.app", "https://ausempi.up.railway.app"})
 public class FileUploadController {
 
     private final FileUploadService fileUploadService;
