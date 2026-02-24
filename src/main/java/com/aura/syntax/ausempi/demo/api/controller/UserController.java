@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/users")
 @RequiredArgsConstructor
 @Validated
+@CrossOrigin(origins = {"http://localhost:5173","https://ausempi-web.vercel.app"})
 public class UserController {
 
     private final UserService userService;

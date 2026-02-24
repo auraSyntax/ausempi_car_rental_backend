@@ -40,6 +40,7 @@ public class JwtService {
     public String generateToken(Map<String, Object> extraClaims, Users user) {
         extraClaims.put("email", user.getEmail());
         extraClaims.put("user_id", user.getId());
+        extraClaims.put("user_type", user.getUserType());
 
         long expirationTimeMillis = 1000L * 60 * 24;
         Date issuedAt = new Date(System.currentTimeMillis());

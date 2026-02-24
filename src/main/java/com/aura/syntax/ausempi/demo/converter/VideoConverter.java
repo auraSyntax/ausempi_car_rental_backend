@@ -1,13 +1,20 @@
 package com.aura.syntax.ausempi.demo.converter;
 
+import com.aura.syntax.ausempi.demo.api.dto.JwtTokenDto;
 import com.aura.syntax.ausempi.demo.api.dto.OptionDto;
 import com.aura.syntax.ausempi.demo.api.dto.QuestionDto;
 import com.aura.syntax.ausempi.demo.api.dto.VideoDto;
+import com.aura.syntax.ausempi.demo.config.ScopeAspect;
 import com.aura.syntax.ausempi.demo.entity.Options;
 import com.aura.syntax.ausempi.demo.entity.Questions;
+import com.aura.syntax.ausempi.demo.entity.Users;
 import com.aura.syntax.ausempi.demo.entity.Videos;
+import com.aura.syntax.ausempi.demo.enums.UserType;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -16,10 +23,13 @@ import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class VideoConverter {
 
     @Value("${cloudinary.base.url}")
     private String videoUrl;
+
+    private final ScopeAspect scopeAspect;
 
     public Videos convert(VideoDto videoDto) {
         return Videos.builder()
@@ -222,11 +232,21 @@ public class VideoConverter {
 
     public List<OptionDto> convertOptions(Questions questions) {
         List<OptionDto> optionDtos = new ArrayList<>();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Users user = (Users) authentication.getPrincipal();
+        UserType currentUserType = user.getUserType();
         questions.getOptions().forEach(options -> {
             OptionDto optionDto = new OptionDto();
-            optionDto.setId(options.getId());
-            optionDto.setOptionText(options.getOptionText());
-//            optionDto.setIsCorrect(options.getIsCorrect());
+            log.info("JWTTOKENDTO----{}",currentUserType);
+            if (currentUserType.getMappedValue().equals(UserType.ADMIN.getMappedValue())) {
+                optionDto.setId(options.getId());
+                optionDto.setOptionText(options.getOptionText());
+                optionDto.setIsCorrect(options.getIsCorrect());
+            } else {
+                optionDto.setId(options.getId());
+                optionDto.setOptionText(options.getOptionText());
+            }
+
             optionDtos.add(optionDto);
         });
 

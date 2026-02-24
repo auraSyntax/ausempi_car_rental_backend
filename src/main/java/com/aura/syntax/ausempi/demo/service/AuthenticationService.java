@@ -65,7 +65,7 @@ public class AuthenticationService {
         RefreshToken refreshToken = refreshTokenService.createRefreshToken(user.getId());
 
         UserDto userDto = new UserDto();
-        userDto.setEmployeeName(user.getFirstName() + " " + user.getLastName());
+        userDto.setEmployeeName(user.getLastName() != null ? user.getFirstName() + " " + user.getLastName() : user.getFirstName());
         userDto.setEmail(user.getEmail());
         userDto.setId(user.getId());
         userDto.setUserType(user.getUserType().getMappedValue());

@@ -10,6 +10,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/videos")
 @RequiredArgsConstructor
+@CrossOrigin(origins = {"http://localhost:5173","https://ausempi-web.vercel.app"})
 public class VideoController {
 
     private final VideoService videoService;
