@@ -14,6 +14,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.List;
+import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
@@ -52,7 +53,13 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.addAllowedOriginPattern("*");
+        corsConfiguration.setAllowedOriginPatterns(Arrays.asList(
+                "http://localhost:5173",
+                "https://ausempi-web.vercel.app",
+                "https://ausempi.up.railway.app",
+                "https://ausempi.com",
+                "https://*.ausempi.com"
+        ));
         corsConfiguration.addAllowedMethod("*");
         corsConfiguration.addAllowedHeader("*");
         corsConfiguration.setAllowCredentials(true);
